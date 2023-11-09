@@ -3,6 +3,107 @@
     padding: 0;
 }
 
+body {
+    background-color: rgb(0, 81, 44);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: rgb(241, 211, 211);
+    padding: 0 3vw;
+}
+
+main {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    padding-top: 3vw;
+}
+
 .game {
     visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 2vw;
+    grid-column: 1 / 7;
+}
+
+.result {
+    visibility: hidden;
+    grid-column-start: span 12;
+}
+
+.actions {
+    visibility: hidden;
+    grid-column: 7 / span 6;
+}
+
+.actions {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.actions li {
+    font-size: 16px;
+    font-weight: 400;
+    padding-top: 1vw;
+}
+
+header {
+    font-size: 50px;
+    font-weight: 700;
+    text-align: center;
+    padding-bottom: 3vw;
+}
+
+.initial-rules {
+    text-align: center;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 3vw;
+    align-items: center;
+    grid-column-start: span 12;
+}
+
+h2 {
+    font-size: 30px;
+    font-weight: 700;
+    padding-bottom: 2vw;
+}
+
+button {
+    background-color: rgb(241, 211, 211);
+    color: rgb(0, 81, 44);
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 700;
+    width: 200px;
+    margin: 1vw;
+    border: solid rgb(241, 211, 211) 5px;
+    box-shadow: 10px 5px 5px black;
+}
+
+button:hover:enabled {
+    transform: scale(1.2);
+}
+
+.game button {
+    width: 100px;
+    font-size: 16px;
+}
+
+img {
+    padding-top: 1vw;
+}
+
+.result {
+    padding-top: 5vw;
+}
+
+.result p {
+    font-size: 25px;
+    font-weight: 700;
+    padding-bottom: 1vw;
+}
+
+button:disabled {
+    opacity: 0.4;
 }
