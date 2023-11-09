@@ -47,22 +47,18 @@ const result = (e) => {
     let player = e.target.alt;
     let result = document.querySelector(".result");
     if (computer === player) {
-        /* draw */
         let paragraph = document.createElement("p");
         let text = document.createTextNode("It's a draw! But AI is going to enslave humans, so humanity loses!");
         paragraph.appendChild(text);
         result.appendChild(paragraph);
-        
     }
     else if (computer === "troll" && player === "sword" || computer === "book" && player === "troll" || computer === "sword" && player === "book") {
-     /* computer wins */
-     let paragraph = document.createElement("p");
-     let text = document.createTextNode("Computer wins! Losing to a machine, uh?");
-     paragraph.appendChild(text);
-     result.appendChild(paragraph);
+        let paragraph = document.createElement("p");
+        let text = document.createTextNode("Computer wins! Losing to a machine, uh?");
+        paragraph.appendChild(text);
+        result.appendChild(paragraph);
     }
     else {
-        /* player wins */
         let paragraph = document.createElement("p");
         let text = document.createTextNode("You won! Oh, wait, I think my code is broken...");
         paragraph.appendChild(text);
