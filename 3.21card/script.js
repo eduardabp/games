@@ -11,13 +11,7 @@ const dealCard = () => {
     return card;
 }
 
-const playButton = document.getElementById("play");
-playButton.addEventListener("click", () => {
-    const rules = document.querySelector(".initial-rules");
-    const game = document.querySelector(".game");
-    rules.style.visibility = "hidden";
-    game.style.visibility = "visible";
-})
+const actionLog = document.querySelector(".log");
 
 /* player */
 
@@ -35,7 +29,16 @@ const playerHand = () => {
         playerScore = playerScore + card.value;
     }
     let playerCount = document.getElementById("player-count");
-    playerCount.innerHTML = playerScore;
+    playerCount.innerHTML = "Player count: " + playerScore;
+    let listItem = document.createElement("li");
+    let action = document.createTextNode("Player has drawn a " + card.altText + ". Player has now " + playerScore + " points.");
+    listItem.appendChild(action);
+    actionLog.appendChild(listItem);
+    if (playerScore >= 21 || computerScore >= 21) {
+        calculateResults();
+        stop.disabled = true;
+        hitMe.disabled = true;
+    }
 }
 
 /* computer */
@@ -54,12 +57,16 @@ const computerHand = () => {
         else {
             computerScore = computerScore + card.value;
         }
+        let listItem = document.createElement("li");
+        let action = document.createTextNode("Computer has drawn a " + card.altText + ". Computer has now " + computerScore + " points.");
+        listItem.appendChild(action);
+        actionLog.appendChild(listItem);
     }
     else {
         return computerScore;
     }
     let computerCount = document.getElementById("computer-count");
-    computerCount.innerHTML = computerScore;
+    computerCount.innerHTML = "Computer count: " + computerScore;
 }
 
 /* results */
@@ -68,8 +75,12 @@ const calculateResults = () => {
     const scoreboard = document.querySelector(".result");
     const result = document.createElement("p");
         /* player or both above 21 - table wins*/
-    if (playerScore > 21) {
+    if (playerScore > 21 && computerScore < 22) {
         const text = document.createTextNode("You busted! I hope you haven't bet your savings on this game...");
+        result.appendChild(text);
+    }
+    else if (playerScore > 21 && computerScore > 22) {
+        const text = document.createTextNode("You both are... not great. But house has the upperhand, so computer wins!");
         result.appendChild(text);
     }
         /* table above 21 and player below/equal 21 - player wins*/
@@ -92,21 +103,36 @@ const calculateResults = () => {
         const text = document.createTextNode("It's a... tie? That's not fun. Play again!");
         result.appendChild(text);
     }
-    scoreboard.appendChild(result);
+    scoreboard.insertBefore(result, playAgain);
+    scoreboard.style.visibility = "visible";
 }
+
+/* button lets play*/
+
+const playButton = document.getElementById("play");
+playButton.addEventListener("click", () => {
+    const rules = document.querySelector(".initial-rules");
+    const header = document.querySelector("header");
+    const game = document.querySelector(".game");
+    rules.remove();
+    header.remove();
+    game.style.visibility = "visible";
+    actionLog.style.visibility = "visible";
+    playerHand();
+    computerHand();
+})
     
 /* button hit me */
 
 const hitMe = document.getElementById("hit-me");
 hitMe.addEventListener("click", playerHand);
-hitMe.addEventListener("click", computerHand);
 
 /* button stop */
 
 const stop = document.getElementById("stop");
 stop.addEventListener("click", () => {
   hitMe.disabled = true;
-  while (computerScore < 16) {
+  while (computerScore < 16 && computerScore < playerScore) {
       computerHand();
   }
   calculateResults();
@@ -114,8 +140,10 @@ stop.addEventListener("click", () => {
 })
 
     /* button play again */
-
-
+const playAgain = document.getElementById("play-again");
+playAgain.addEventListener("click", () => {
+    document.location.reload();
+})
 
 
 
